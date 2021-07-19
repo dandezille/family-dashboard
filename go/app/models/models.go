@@ -5,8 +5,10 @@ import (
 )
 
 type Activity struct {
+	ID     int64
 	Symbol string
 	Start  time.Time
+	Note   string
 }
 
 type Activities struct {
