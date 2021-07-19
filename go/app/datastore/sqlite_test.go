@@ -57,6 +57,11 @@ func TestGetAll(t *testing.T) {
 			Start:  time.Now().Add(time.Hour),
 			Note:   "note a",
 		},
+		&models.Activity{
+			Symbol: "b",
+			Start:  time.Now().Add(2 * time.Hour),
+			Note:   "note b",
+		},
 	}
 
 	for _, element := range activities {
@@ -66,7 +71,7 @@ func TestGetAll(t *testing.T) {
 	got, err := store.Find()
 	assert.NoError(t, err)
 	if assert.NotNil(t, got) {
-		assert.Len(t, got, 1)
+		assert.Len(t, got, len(activities))
 	}
 
 	for index, element := range activities {
