@@ -22,13 +22,8 @@ type datastore struct {
 }
 
 func NewSqliteDatastore(path string) (Datastore, error) {
-	db, err := sqlx.Connect("sqlite3", path)
-	if err != nil {
-		return nil, err
-	}
-
+	db := sqlx.MustConnect("sqlite3", path)
 	db.MustExec(schema)
-
 	return &datastore{db}, nil
 }
 
