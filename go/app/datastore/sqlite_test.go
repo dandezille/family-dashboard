@@ -8,6 +8,7 @@ import (
 
 	"server/app/models"
 
+	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -42,7 +43,7 @@ func TestCreateGet(t *testing.T) {
 	got, err := store.FindById(activity.ID)
 	assert.NoError(t, err)
 	if assert.NotNil(t, got) {
-		assert.Equal(t, activity, *got)
+		assert.Empty(t, cmp.Diff(activity, *got))
 	}
 }
 
@@ -69,7 +70,7 @@ func TestGetAll(t *testing.T) {
 	}
 
 	for index, element := range activities {
-		assert.Equal(t, element, got[index])
+		assert.Empty(t, cmp.Diff(element, got[index]))
 	}
 }
 
