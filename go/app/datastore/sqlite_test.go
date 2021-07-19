@@ -33,7 +33,7 @@ func TestCreateGet(t *testing.T) {
 
 	activity := models.Activity{
 		Symbol: "a",
-		Start:  time.Now().Round(0),
+		Start:  time.Now(),
 		Note:   "note",
 	}
 
@@ -54,7 +54,7 @@ func TestGetAll(t *testing.T) {
 	activities := []*models.Activity{
 		&models.Activity{
 			Symbol: "a",
-			Start:  time.Now().Round(0).Add(time.Hour),
+			Start:  time.Now().Add(time.Hour),
 			Note:   "note a",
 		},
 	}
@@ -80,7 +80,7 @@ func TestUpdate(t *testing.T) {
 
 	activity := models.Activity{
 		Symbol: "a",
-		Start:  time.Now().Round(0),
+		Start:  time.Now(),
 		Note:   "note",
 	}
 
@@ -102,7 +102,7 @@ func TestDelete(t *testing.T) {
 
 	activity := models.Activity{
 		Symbol: "a",
-		Start:  time.Now().Round(0),
+		Start:  time.Now(),
 		Note:   "note",
 	}
 
