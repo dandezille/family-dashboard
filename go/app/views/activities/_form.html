@@ -1,0 +1,44 @@
+{{ define "form" }}
+
+<div class="flex justify-around m-12">
+  <form class="bg-gray-200 border-b rounded" 
+        action="/activities{{ with . }}/{{ .ID }}{{ end }}" 
+        method="post">
+
+      <div class="m-3 mb-6">
+        <label class="block mb-1 text-gray-700" 
+               for="start">Start</label>
+        <input class="w-full p-1 border" 
+               type="time" 
+               name="start"
+               {{ with . }}value="{{ .Start.Format "15:04" }}"{{ end }}>
+      </div>
+
+      <div class="m-3 mb-6">
+        <label class="block mb-1 text-gray-700" 
+               for="symbol">Symbol</label>
+        <input class="p-1 border" 
+               type="text" 
+               name="symbol"
+               {{ with . }}value="{{ .Symbol }}"{{ end }}>
+      </div>
+
+      <div class="m-3 mb-6">
+        <label class="block mb-1 text-gray-700" 
+               for="note">Note</label>
+        <input class="p-1 border" 
+               type="text" 
+               name="note"
+               {{ with . }}value="{{ .Note }}"{{ end }}>
+      </div>
+
+      <div class="flex justify-around m-3">
+        <input type="submit" 
+               value="{{ if . }}Update{{ else }}Add{{ end }}" 
+               class="px-4 py-1 text-white bg-gray-800 rounded">
+      </div>
+  </form>
+
+</div>
+
+{{ end }}

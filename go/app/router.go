@@ -22,7 +22,13 @@ func SetupRouter() *mux.Router {
 }
 
 func setupRoutes(r *mux.Router) {
-	r.HandleFunc("/", HandleHome)
+	r.HandleFunc("/", HandleHome).Methods("GET")
+	r.HandleFunc("/activities", HandleGetActivities).Methods("GET")
+	r.HandleFunc("/activities", HandlePostActivities).Methods("POST")
+	r.HandleFunc("/activities/new", HandleGetNewActivity).Methods("GET")
+	r.HandleFunc("/activities/{id}/edit", HandleGetEditActivity).Methods("GET")
+	r.HandleFunc("/activities/{id}", HandlePostActivity).Methods("POST")
+	r.HandleFunc("/activities/{id}", HandleDeleteActivity).Methods("DELETE")
 }
 
 func setupStatic(r *mux.Router) {

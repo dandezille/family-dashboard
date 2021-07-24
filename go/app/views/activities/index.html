@@ -1,0 +1,41 @@
+{{ define "title" }}
+  Family Dashboard | Activities
+{{ end }}
+
+{{ define "content" }}
+
+<div class="sm:flex sm:justify-around">
+  <table class="w-screen sm:max-w-screen-sm">
+    <thead class="text-left text-white bg-gray-800">
+      <tr>
+        <th class="px-2 py-3 text-center">Time</th>
+        <th class="px-2 py-3 text-center">Symbol</th>
+        <th class="px-2 py-3">Note</th>
+        <th class="px-2 py-3"></th>
+        <th class="px-2 py-3"></th>
+      </tr>
+    </thead>
+    <tbody class="text-gray-700 bg-gray-100">
+      {{ range .Activities }}
+        <tr data-activity-id="{{ .ID }}" class="even:bg-gray-200">
+          <td class="px-2 py-1 text-center">{{ .Start.Format "15:04" }}</td>
+          <td class="px-2 py-1 text-center">{{ .Symbol }}</td>
+          <td class="px-2 py-1">{{ .Note }}</td>
+
+          <td class="px-2 py-1"><a href="/activities/{{ .ID }}/edit">✏️</a></td>
+          <td class="px-2 py-1"
+              data-controller="link"
+              data-link-href-value="/activities/{{ .ID }}">
+            <button data-action="link#delete">🗑️</a>
+          </td>
+        </tr>
+      {{end}}
+    </tbody>
+  </table>
+</div>
+
+<div class="flex justify-around m-6">
+  <a href="/activities/new" class="px-4 py-2 font-bold text-white bg-gray-800 rounded hover:bg-gray-700">Add activity</a>
+</div>
+
+{{ end }}
