@@ -37,7 +37,7 @@ func setupJavascript(r *mux.Router) {
 
 func logRequests(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Println(r.RequestURI)
+		log.Printf("%s: %s\n", r.Method, r.RequestURI)
 		next.ServeHTTP(w, r)
 	})
 }
