@@ -146,6 +146,7 @@ func (a app) HandleDeleteActivity(w http.ResponseWriter, r *http.Request) {
 func handleError(w http.ResponseWriter, err error) bool {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		log.Println("Error:", err)
 	}
 
 	return err != nil
