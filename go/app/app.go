@@ -12,14 +12,14 @@ type App interface {
 }
 
 type app struct {
-	db datastore.Datastore
+	activities datastore.Datastore
 }
 
 func New() (App, error) {
-	db, err := datastore.NewSqliteDatastore("./data.db")
-	return app{db}, err
+	activities, err := datastore.NewSqliteDatastore("./activities.db")
+	return app{activities}, err
 }
 
 func (a app) Close() error {
-	return a.db.Close()
+	return a.activities.Close()
 }

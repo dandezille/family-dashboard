@@ -21,7 +21,7 @@ func HandleHome(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a app) HandleGetActivities(w http.ResponseWriter, r *http.Request) {
-	activities, err := a.db.Find()
+	activities, err := a.activities.Find()
 	if handleError(w, err) {
 		return
 	}
@@ -58,7 +58,7 @@ func (a app) HandlePostActivities(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("Create: %v\n", activity)
 
-	err = a.db.Create(activity)
+	err = a.activities.Create(activity)
 	if handleError(w, err) {
 		return
 	}
@@ -81,7 +81,7 @@ func (a app) HandleGetEditActivity(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	activity, err := a.db.FindById(id)
+	activity, err := a.activities.FindById(id)
 	if handleError(w, err) {
 		return
 	}
@@ -107,7 +107,7 @@ func (a app) HandlePostActivity(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	activity, err := a.db.FindById(id)
+	activity, err := a.activities.FindById(id)
 	if handleError(w, err) {
 		return
 	}
@@ -124,7 +124,7 @@ func (a app) HandlePostActivity(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("Updated: %v\n", activity)
 
-	a.db.Update(activity)
+	a.activities.Update(activity)
 	http.Redirect(w, r, "/activities", 303)
 }
 
@@ -135,7 +135,7 @@ func (a app) HandleDeleteActivity(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = a.db.Delete(id)
+	err = a.activities.Delete(id)
 	if handleError(w, err) {
 		return
 	}
