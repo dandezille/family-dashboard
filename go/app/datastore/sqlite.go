@@ -1,6 +1,8 @@
 package datastore
 
 import (
+	"time"
+
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 
@@ -41,6 +43,18 @@ func (s *datastore) FindById(id int64) (*models.Activity, error) {
 	}
 
 	return &activity, nil
+}
+
+func (s *datastore) FindByTime(time.Time) ([]*models.Activity, error) {
+	activities := []*models.Activity{}
+	query := "SELECT id, symbol, start, note FROM activities ORDER BY start"
+
+	err := s.db.Select(&activities, query)
+	if err != nil {
+		return nil, err
+	}
+
+	return activities, nil
 }
 
 func (s *datastore) Find() ([]*models.Activity, error) {

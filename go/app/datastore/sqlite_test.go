@@ -79,6 +79,37 @@ func TestGetAll(t *testing.T) {
 	}
 }
 
+func TestFindByTime(t *testing.T) {
+	store, cleanup := create(t)
+	defer cleanup()
+
+	now := time.Now()
+	store.Create(&models.Activity{
+		Symbol: "a",
+		Start:  now.Add(-2 * time.Hour),
+	})
+	store.Create(&models.Activity{
+		Symbol: "b",
+		Start:  now.Add(-time.Hour),
+	})
+	store.Create(&models.Activity{
+		Symbol: "c",
+		Start:  now.Add(time.Hour),
+	})
+	store.Create(&models.Activity{
+		Symbol: "d",
+		Start:  now.Add(2 * time.Hour),
+	})
+
+	found, err := store.FindByTime(now)
+	assert.NoError(t, err)
+	if assert.NotNil(t, found) {
+		assert.Len(t, found, 2)
+		assert.Equal(t, "b", found[0].Symbol)
+		assert.Equal(t, "c", found[1].Symbol)
+	}
+}
+
 func TestUpdate(t *testing.T) {
 	store, cleanup := create(t)
 	defer cleanup()

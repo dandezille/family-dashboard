@@ -2,6 +2,7 @@ package app
 
 import (
 	"encoding/json"
+	"errors"
 	"html/template"
 	"log"
 	"net/http"
@@ -145,20 +146,19 @@ func (a app) DeleteActivity(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a app) ApiGetActivities(w http.ResponseWriter, r *http.Request) {
-	data := models.Activities{
-		Current: models.Activity{
-			Symbol: "A",
-			Start:  time.Now().Local(),
-		},
-		Next: models.Activity{
-			Symbol: "B",
-			Start:  time.Now().Local().Add(time.Minute * time.Duration(1)),
-		},
+	activities, err := a.activities.FindByTime(time.Now())
+	if handleError(w, err) {
+		return
+	}
+
+	if len(activities) < 2 {
+		handleError(w, errors.New("Insufficient activities"))
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(data)
+	json.NewEncoder(w).Encode(activities[:2])
 }
 
 func ApiGetWeather(w http.ResponseWriter, r *http.Request) {
