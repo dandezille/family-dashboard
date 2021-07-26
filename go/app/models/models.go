@@ -11,11 +11,6 @@ type Activity struct {
 	Note   string
 }
 
-type Activities struct {
-	Current Activity
-	Next    Activity
-}
-
 type Temperature struct {
 	Min int
 	Now int
