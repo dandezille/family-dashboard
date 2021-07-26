@@ -13,14 +13,14 @@ import (
 	"server/app/models"
 )
 
-func HandleHome(w http.ResponseWriter, r *http.Request) {
+func GetHome(w http.ResponseWriter, r *http.Request) {
 	err := renderPage("app/views/pages/home.html", w, nil)
 	if handleError(w, err) {
 		return
 	}
 }
 
-func (a app) HandleGetActivities(w http.ResponseWriter, r *http.Request) {
+func (a app) GetActivities(w http.ResponseWriter, r *http.Request) {
 	activities, err := a.activities.Find()
 	if handleError(w, err) {
 		return
@@ -37,7 +37,7 @@ func (a app) HandleGetActivities(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (a app) HandlePostActivities(w http.ResponseWriter, r *http.Request) {
+func (a app) PostActivities(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if handleError(w, err) {
 		return
@@ -67,14 +67,14 @@ func (a app) HandlePostActivities(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/activities", 303)
 }
 
-func HandleGetNewActivity(w http.ResponseWriter, r *http.Request) {
+func GetNewActivity(w http.ResponseWriter, r *http.Request) {
 	err := renderPage("app/views/activities/new.html", w, nil)
 	if handleError(w, err) {
 		return
 	}
 }
 
-func (a app) HandleGetEditActivity(w http.ResponseWriter, r *http.Request) {
+func (a app) GetEditActivity(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.ParseInt(vars["id"], 10, 64)
 	if handleError(w, err) {
@@ -93,7 +93,7 @@ func (a app) HandleGetEditActivity(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (a app) HandlePostActivity(w http.ResponseWriter, r *http.Request) {
+func (a app) PostActivity(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if handleError(w, err) {
 		return
@@ -128,7 +128,7 @@ func (a app) HandlePostActivity(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/activities", 303)
 }
 
-func (a app) HandleDeleteActivity(w http.ResponseWriter, r *http.Request) {
+func (a app) DeleteActivity(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.ParseInt(vars["id"], 10, 64)
 	if handleError(w, err) {

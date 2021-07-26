@@ -22,13 +22,13 @@ func (a app) SetupRouter() (*mux.Router, error) {
 }
 
 func (a app) setupRoutes(r *mux.Router) {
-	r.HandleFunc("/", HandleHome).Methods("GET")
-	r.HandleFunc("/activities", a.HandleGetActivities).Methods("GET")
-	r.HandleFunc("/activities", a.HandlePostActivities).Methods("POST")
-	r.HandleFunc("/activities/new", HandleGetNewActivity).Methods("GET")
-	r.HandleFunc("/activities/{id}/edit", a.HandleGetEditActivity).Methods("GET")
-	r.HandleFunc("/activities/{id}", a.HandlePostActivity).Methods("POST")
-	r.HandleFunc("/activities/{id}", a.HandleDeleteActivity).Methods("DELETE")
+	r.HandleFunc("/", GetHome).Methods("GET")
+	r.HandleFunc("/activities", a.GetActivities).Methods("GET")
+	r.HandleFunc("/activities", a.PostActivities).Methods("POST")
+	r.HandleFunc("/activities/new", GetNewActivity).Methods("GET")
+	r.HandleFunc("/activities/{id}/edit", a.GetEditActivity).Methods("GET")
+	r.HandleFunc("/activities/{id}", a.PostActivity).Methods("POST")
+	r.HandleFunc("/activities/{id}", a.DeleteActivity).Methods("DELETE")
 }
 
 func setupStatic(r *mux.Router) {
