@@ -5,8 +5,6 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-
-	"server/app/api"
 )
 
 func (a app) SetupRouter() (*mux.Router, error) {
@@ -14,9 +12,9 @@ func (a app) SetupRouter() (*mux.Router, error) {
 	r.Use(logRequests)
 
 	a.setupRoutes(r)
+	a.setupApiRoutes(r.PathPrefix("/api").Subrouter())
 	setupStatic(r)
 	setupJavascript(r)
-	api.SetupRoutes(r.PathPrefix("/api").Subrouter())
 
 	return r, nil
 }
@@ -29,6 +27,11 @@ func (a app) setupRoutes(r *mux.Router) {
 	r.HandleFunc("/activities/{id}/edit", a.GetEditActivity).Methods("GET")
 	r.HandleFunc("/activities/{id}", a.PostActivity).Methods("POST")
 	r.HandleFunc("/activities/{id}", a.DeleteActivity).Methods("DELETE")
+}
+
+func (a app) setupApiRoutes(r *mux.Router) {
+	r.HandleFunc("/activities", a.ApiGetActivities)
+	r.HandleFunc("/weather", ApiGetWeather)
 }
 
 func setupStatic(r *mux.Router) {

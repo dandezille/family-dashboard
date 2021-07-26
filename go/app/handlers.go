@@ -1,6 +1,7 @@
 package app
 
 import (
+	"encoding/json"
 	"html/template"
 	"log"
 	"net/http"
@@ -143,6 +144,34 @@ func (a app) DeleteActivity(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/activities", 303)
 }
 
+func (a app) ApiGetActivities(w http.ResponseWriter, r *http.Request) {
+	data := models.Activities{
+		Current: models.Activity{
+			Symbol: "A",
+			Start:  time.Now().Local(),
+		},
+		Next: models.Activity{
+			Symbol: "B",
+			Start:  time.Now().Local().Add(time.Minute * time.Duration(1)),
+		},
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(data)
+}
+
+func ApiGetWeather(w http.ResponseWriter, r *http.Request) {
+	data := models.Temperature{
+		Min: 12,
+		Now: 13,
+		Max: 14,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(data)
+}
 func handleError(w http.ResponseWriter, err error) bool {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
