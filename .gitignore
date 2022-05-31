@@ -2,3 +2,6 @@
 
 # sqlite data files
 *.db
+
+# environment variables
+.env
